@@ -6,8 +6,7 @@ package baek20220601;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 
 public class First {
@@ -71,6 +70,15 @@ public class First {
 
         result.setLength(result.length()-1);
         System.out.println(result);
+
+        Stack<Integer> test =new Stack<>();
+        List<Integer> test2 = new ArrayList<>();
+        List<Integer> test3 = new LinkedList<>();
+        List<Integer> test6 = new Stack<>();
+
+        Queue<Integer> test4 = new LinkedList<>();
+        Queue<Integer> test5 = new ArrayDeque<>();
+
 
     }
 }
