@@ -148,9 +148,8 @@ public class Third {
             }
 
 
-            //가장 자리 찾기()
+            /*가장 자리 찾기()*/
             List<Location> inputLocs = new ArrayList<>();
-
 
             //왼쪽 끝과, 오른쪽 끝
             for(int i = 0; i < h; i++){
