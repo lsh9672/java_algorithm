@@ -137,13 +137,14 @@ public class Second {
         }
 
         //지역구를 나눠서 넣을 배열 초기화.
-        //1번과 2번으로 나눔
+        //1번과 0번으로 나눔
         teams = new int[N+1];
 
         //두 팀의 인원을 각각 구할때 구하기 편하게 총합을 미리 구해둠.
         for(int i = 1; i <=N; i++){
             totalSum += peopleNum[i];
         }
+
         recursive(1);
 
         if(minGapValue == Integer.MAX_VALUE){
