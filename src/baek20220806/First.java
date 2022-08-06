@@ -47,6 +47,7 @@ public class First {
             }
 
         }
+
     }
 
     //배열을 새로 만들어서 startIdx값에 따라 업데이트  + startIdx배열 초기화.
@@ -56,9 +57,10 @@ public class First {
         //업데이트 된 시작 배열로 새로운 숫자를 위치시킨 배열을 만듦
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
-                tempPlate[i][j] = roundPlate[i][(startIdx[i]+j)%M];
+                tempPlate[i][(startIdx[i]+j)%M] = roundPlate[i][j];
             }
         }
+
 
         //인접숫자같다면 삭제 =>0으로 표기
 
@@ -70,35 +72,60 @@ public class First {
         for(int i = 0; i < N; i++){
             for(int j = 0; j < M; j++){
 
-                for(int d = 0; d < 4; d++){
-                    int nextX = i + dx[d];
-                    int nextY = j + dy[d];
-                    //y좌표는 원형큐의 형태임
-                    if(nextY < 0) nextY = M-1;
-                    else if(nextY >= M) nextY = 0;
+                if(tempPlate[i][j] != 0) {
+                    for (int d = 0; d < 4; d++) {
+                        int nextX = i + dx[d];
+                        int nextY = j + dy[d];
+                        //y좌표는 원형큐의 형태임
+                        if (nextY < 0) nextY = M - 1;
+                        else if (nextY >= M) nextY = 0;
 
-                    if(nextX >= 0 && nextX < N){
-                        if(tempPlate[i][j] == tempPlate[nextX][nextY]){
-                            deleteLoc[i][j] = true;
-                            deleteLoc[nextX][nextY] = true;
+                        if (nextX >= 0 && nextX < N) {
+                            if (tempPlate[i][j] == tempPlate[nextX][nextY]) {
+                                deleteLoc[i][j] = true;
+                                deleteLoc[nextX][nextY] = true;
 
-                            flag = false;
+                                flag = false;
+                            }
                         }
                     }
                 }
-
             }
         }
 
         //인접하면서 수가 같은 것이 하나도 없다.=> 전체 더하고 평균 구한후에 각 수랑 비교해서  작은수는 +1, 큰수는 -1씩 해줌.
-        if(!flag){
+        if(flag){
+
+            //평균 구하기
             int notZeroCount = 0;
             int totalValue = 0;
             for(int i = 0; i < N; i++){
                 for(int j =0; j< M; j++){
-
+                    if(tempPlate[i][j] != 0){
+                        notZeroCount++;
+                        totalValue+=tempPlate[i][j];
+                    }
                 }
             }
+
+            //평균 저장
+            double avr = (double) totalValue / (double) notZeroCount;
+
+//            System.out.println("total : " + totalValue + " totalCount : " + notZeroCount);
+
+            for(int i = 0; i < N; i++){
+                for(int j =0; j< M; j++){
+                    if(tempPlate[i][j] != 0){
+                        if(tempPlate[i][j] > avr){
+                            tempPlate[i][j]--;
+                        }
+                        else if(tempPlate[i][j] < avr){
+                            tempPlate[i][j]++;
+                        }
+                    }
+                }
+            }
+
 
 
         }
@@ -112,6 +139,14 @@ public class First {
                 }
             }
         }
+
+//        for(int[] a22 : tempPlate){
+//            System.out.println(Arrays.toString(a22));
+//        }
+//        System.out.println();
+
+        //다음 원판 회전을 위해 시작인덱스 배열 초기화
+        startIdx = new int[N];
 
         //새로 업데이트한 원판으로 업데이트
         roundPlate = tempPlate;
@@ -159,6 +194,8 @@ public class First {
             rotatePlate(x, d, k);
             plateUpdate();
         }
+
+
 
         //원판 탐색이 끝나고 마지막에 모든 값의 합을 구함.
         int result = 0;
