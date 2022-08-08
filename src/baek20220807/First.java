@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 public class First {
@@ -32,6 +34,7 @@ public class First {
     };
 
     static boolean[][] check;
+
 
     //4개의 말로 10번 움직이는 경우의 수
     static void playOrder(int idx){
