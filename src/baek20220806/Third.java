@@ -125,8 +125,6 @@ public class Third {
         int value;
         int dir;
 
-
-
         Location(int value, int dir){
             this.value = value;
             this.dir = dir;

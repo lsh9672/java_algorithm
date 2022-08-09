@@ -35,7 +35,6 @@ public class First {
 
     static boolean[][] check;
 
-
     //4개의 말로 10번 움직이는 경우의 수
     static void playOrder(int idx){
         if(idx >= maxN){
@@ -202,7 +201,6 @@ public class First {
             else{
                 check[currentLoc[tempHorse].x][currentLoc[tempHorse].y] = false;
             }
-
 
             if(!startFlag){
                 currentLoc[tempHorse].x = nextX;
