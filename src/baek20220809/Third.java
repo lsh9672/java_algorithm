@@ -44,8 +44,8 @@ public class Third {
 
             }
 
-            System.out.println(subContain.toString());
-            System.out.println(wantNum);
+//            System.out.println(subContain.toString());
+//            System.out.println(wantNum);
 
         }
 

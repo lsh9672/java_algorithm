@@ -1,72 +1,143 @@
 package baek20220809;
 
 public class Fourth {
-    static int result = Integer.MAX_VALUE;
-
     static int N;
-//    static int[] dx;
-//    static int[] dy;
-//
-    static int[][] maps;
-    static int[][] targetMap;
+    static int M;
+    static int result;
 
-    //타켓인지 확인
-    static boolean check(int[][] tmpMap){
-        for(int i = 0; i < tmpMap.length; i++){
-            for(int j = 0; j < tmpMap[0].length; j++){
+    //타겟 게임판
+    static int[][] targetMaps;
 
-                if(tmpMap[i][j] != targetMap[i][j]) return false;
+
+    // 배열 복사해서 새로운거 리턴하는 함수.
+    static int[][] copyArray(int[][] tempMaps){
+        int[][] newMaps = new int[N][M];
+
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < M; j++) {
+                newMaps[i][j] = tempMaps[i][j];
+            }
+//			 System.arraycopy(tempMaps[i], 0, newMaps[i], 0, N);
+        }
+
+        return newMaps;
+    }
+
+    //rowColCheck == 0이면 행, 1이면 열
+    static void updateMaps(int[][] tempMaps,int rowColCheck, int idx) {
+        // 주어진 값에 해당하는 행 업데이트
+        if(rowColCheck == 0) {
+            for(int i = 0; i < M; i++) {
+                if(tempMaps[idx][i] == 0) {
+                    tempMaps[idx][i] = 1;
+                }
+                else {
+                    tempMaps[idx][i] = 0;
+                }
             }
         }
+        else {
+            for(int i = 0; i < N; i++) {
+                if(tempMaps[i][idx] == 0) {
+                    tempMaps[i][idx] = 1;
+                }
+                else {
+                    tempMaps[i][idx] = 0;
+                }
+            }
+        }
+    }
+
+    //타겟과 같은지 확인하는 함수.
+    static boolean check(int[][] tempMaps) {
+
+        for(int i = 0; i< N; i++) {
+            for(int j = 0; j < M; j++) {
+                if(targetMaps[i][j] != tempMaps[i][j]) {
+                    return false;
+                }
+            }
+        }
+
         return true;
     }
-    //x가 0이면 열, y가 0이면 행
-    static void recursive(int preX, int preY, int[][] nextMaps, int value){
-        //현재 뒤집은 횟수가 저장된 횟수보다 크다면 더 갈필요 없음.
-        if (value > result){
+
+    //행을 뒤집는 경우를 만드는 재귀함수.
+    static void recursiveRow(int[][] currentMaps,int rowCount,int idx) {
+
+        //목표배열이라면.
+        if(check(currentMaps)) {
+            System.out.println("test");
+            if(rowCount >= result) return;
+
+            result = Math.min(result, rowCount);
+
             return;
         }
-        if(check(nextMaps)){
-            result = Math.min(result,value);
+
+        if(idx >= N) {
+            //컬럼을 선택하는 메서드 호출
+            recursiveColumn(currentMaps,rowCount,0);
+            return;
         }
 
-        //재귀시에 영향을 안끼치도록 복사해서 사용.
-        int[][] tempMaps = new int[N][N];
-        for(int i = 0; i < N; i++){
-            System.arraycopy(nextMaps[i],0,tempMaps[i],0,N);
+        // 0번째 행부터 N-1번째 행까지 선택하는 경우의 수
+
+        //해당 로우를 선택하는 경우 - 배열을 복사후 넘겨줌
+        //1. 배열 복사.
+        int[][] newMaps = copyArray(currentMaps);
+        updateMaps(newMaps,0,idx);
+        recursiveRow(newMaps,rowCount+1,idx+1);
+
+        //선택하지 않는 경우.
+        recursiveRow(currentMaps,rowCount,idx+1);
+
+
+    }
+    //열을 뒤집는 경우를 하는 재귀함수
+    static void recursiveColumn(int[][] currentMaps, int ColumnCount, int idx) {
+        if(check(currentMaps)) {
+            if(ColumnCount >= result) return;
+
+            result = Math.min(result, ColumnCount);
+            return;
         }
 
-        for(int i = 1; i <= N; i++){
-            //이전에 뒤집었으면 리턴.
-            if(preX == 0 && preY == i) return;
-
-            if(preX == i && preY == 0) return;
+        if(idx == M) {
+            return;
         }
 
+        //해당 컬럼를 선택하는 경우 - 배열을 복사후 넘겨줌
+        //1. 배열 복사.
+        int[][] newMaps = copyArray(currentMaps);
+        updateMaps(newMaps,1,idx);
+        recursiveColumn(newMaps,ColumnCount+1,idx+1);
 
+        //선택하지 않는 경우.
+        recursiveColumn(currentMaps,ColumnCount,idx+1);
 
     }
 
     public int solution(int[][] beginning, int[][] target) {
-
-        maps = beginning;
-        targetMap = target;
-
         N = beginning.length;
+        M = beginning[0].length;
 
-        //각 행과 열에 대해 map길이 만큼 만들어두기.
+        targetMaps = target;
+        result = Integer.MAX_VALUE;
 
-        recursive();
+        recursiveRow(beginning,0,0);
 
-        if(result == Integer.MAX_VALUE) return -1;
+        if(result == Integer.MAX_VALUE)
+            return -1;
+
         return result;
     }
 
     public static void main(String[] args) {
+//        Solution s = new Solution();
         int[][] beginning = {{0, 1, 0, 0, 0}, {1, 0, 1, 0, 1}, {0, 1, 1, 1, 0}, {1, 0, 1, 1, 0}, {0, 1, 0, 1, 0}};
         int[][] target = {{0, 0, 0, 1, 1}, {0, 0, 0, 0, 1}, {0, 0, 1, 0, 1}, {0, 0, 0, 1, 0}, {0, 0, 0, 0, 1}};
-        Fourth f  = new Fourth();
 
-        System.out.println(solution(beginning,target));
+//        System.out.println(s.solution(beginning,target));
     }
 }
