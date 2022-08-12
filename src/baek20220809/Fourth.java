@@ -17,7 +17,6 @@ public class Fourth {
             for(int j = 0; j < M; j++) {
                 newMaps[i][j] = tempMaps[i][j];
             }
-//			 System.arraycopy(tempMaps[i], 0, newMaps[i], 0, N);
         }
 
         return newMaps;
