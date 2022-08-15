@@ -4,6 +4,7 @@ package baek20220815;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /**
@@ -53,6 +54,72 @@ public class BOJ20061 {
             boolean flag = true;
             for(int j = 0; j < 4; j++){
                 //각 열을 살펴봤을때 0이 하나라도 있으면 그 줄은 삭제 안됨.
+                if(maps[j][i] == 0){
+                    flag = false;
+                    break;
+                }
+            }
+            //한줄 살펴보았는데, true이면 그 줄은 삭제.
+            if(flag){
+                //삭제시마다 점수획득
+                score++;
+                //한줄씩 옮김
+                for(int x = i - 1; x >= 4; x--){
+                    for(int y = 0; y < 4; y++){
+                        maps[y][x+1] = maps[y][x];
+                    }
+                }
+
+                //마지막 줄 0으로 만들기
+                for(int fin = 0; fin < 4; fin++){
+                    maps[fin][4] = 0;
+                }
+
+                //삭제가 이루어졌던 열 부터 다시 탐색하도록 i값을 증가시킴
+                i++;
+            }
+        }
+
+        //2. 연한 색깔 확인
+        //한줄씩 확인함
+        for(int i = 5; i >=4; i--){
+            boolean checkFlag = true;
+            for(int j = 0; j < 4; j++){
+                if(maps[j][i] != 0){
+                    checkFlag = false;
+                    break;
+                }
+
+            }
+
+            //한 열에 하나라도 값이 있었다면 한줄 삭제하고 땡기기
+            if(!checkFlag){
+//                score++;
+                //한줄씩 옮김
+                for(int x = 8; x >= 4; x--){
+                    for(int y = 0; y < 4; y++){
+                        maps[y][x+1] = maps[y][x];
+                    }
+                }
+
+                //마지막 줄 0으로 만들기
+                for(int fin = 0; fin < 4; fin++){
+                    maps[fin][4] = 0;
+                }
+
+                i++;
+            }
+        }
+
+    }
+
+    static void scoreCheckGreen(){
+        //1-2 초록색 확인.
+        for(int i = 9; i >= 6; i--){
+            //한줄을 삭제 할 수 있는 지 체크
+            boolean flag = true;
+            for(int j = 0; j < 4; j++){
+                //각 행을 살펴봤을때 0이 하나라도 있으면 그 줄은 삭제 안됨.
                 if(maps[i][j] == 0){
                     flag = false;
                     break;
@@ -60,6 +127,8 @@ public class BOJ20061 {
             }
             //한줄 살펴보았는데, true이면 그 줄은 삭제.
             if(flag){
+                //삭제시마다 점수획득
+                score++;
                 //한줄씩 옮김
                 for(int x = i - 1; x >= 4; x--){
                     for(int y = 0; y < 4; y++){
@@ -72,28 +141,41 @@ public class BOJ20061 {
                     maps[4][fin] = 0;
                 }
 
-                //삭제가 이루어졌던 열 부터 다시 탐색하도록 i값을 증가시킴
+                //삭제가 이루어졌던 행 부터 다시 탐색하도록 i값을 증가시킴
                 i++;
             }
         }
 
         //2. 연한 색깔 확인
+        //한줄씩 확인함
+        for(int i = 5; i >=4; i--){
+            boolean checkFlag = true;
+            for(int j = 0; j < 4; j++){
+                if(maps[i][j] != 0){
+                    checkFlag = false;
+                    break;
+                }
 
+            }
+            //한 행에 하나라도 값이 있었다면 한줄 삭제하고 땡기기
+            if(!checkFlag){
+                //한줄씩 옮김
+//                score++;
+                for(int x = 8; x >= 4; x--){
+                    for(int y = 0; y < 4; y++){
+                        maps[x+1][y] = maps[x][y];
+                    }
+                }
 
+                //마지막 줄 0으로 만들기
+                for(int fin = 0; fin < 4; fin++){
+                    maps[4][fin] = 0;
+                }
 
+                i++;
+            }
+        }
 
-
-
-    }
-
-    static void scoreCheckGreen(){
-        //1-2 초록색 확인.
-
-
-        //2. 연한색깔에 블럭이 하나라도 있다면 맨밑 줄 삭제.
-
-
-        //초록색
     }
 
     //빨간줄에 블럭넣고 초록, 파란으로 이동
@@ -106,7 +188,7 @@ public class BOJ20061 {
             for(int dir = 0; dir < 2; dir++){
 
                 //최대 9칸까지 이동가능 - 각 칸을 확인하면서 놓을수 있는지 확인
-                for(int i = 1; i <= 9; i++){
+                for(int i = 1; i <= 10; i++){
                     int nextX = x + dx[dir]*i;
                     int nextY = y + dy[dir]*i;
 
@@ -124,18 +206,31 @@ public class BOJ20061 {
             for(int dir = 0; dir < 2; dir++){
 
                 //최대 9칸까지 이동가능 - 각 칸을 확인하면서 놓을수 있는지 확인
-                for(int i = 1; i <= 9; i++){
+                for(int i = 1; i <= 10; i++){
                     int nextX = x + dx[dir]*i;
                     int nextY = y + dy[dir]*i;
 
                     //해당좌표가 게임판을 벗어났거나 이미 있는 위치(1이 들어있음)라면 그 전위치에 블럭을 놓음.
                     //t=2인 경우에는 y+1값도 확인해야 됨.
-                    if(nextX < 0 || nextX >= 10 || nextY < 0 || nextY >= 10 || maps[nextX][nextY] == 1 || maps[nextX][nextY+1] == 1){
-                        //블럭 놓고 종료
-                        maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
-                        maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1) + 1] = 1;
-                        break;
+//                    System.out.println("dir : "+ dir + ", nextX : " + nextX + ", nextY : " + nextY);
+                    if(dir == 0){
+                        if(nextX < 0 || nextX >= 10 || nextY < 0 || nextY >= 10 || maps[nextX][nextY] == 1 || maps[nextX][nextY+1] == 1){
+                            //블럭 놓고 종료
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1) + 1] = 1;
+                            break;
+                        }
                     }
+
+                    else if(dir == 1){
+                        if(nextX < 0 || nextX >= 10 || nextY < 0 || nextY >= 9 || maps[nextX][nextY] == 1 || maps[nextX][nextY+1] == 1){
+                            //블럭 놓고 종료
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1) + 1] = 1;
+                            break;
+                        }
+                    }
+
 
                 }
             }
@@ -144,25 +239,37 @@ public class BOJ20061 {
             for(int dir = 0; dir < 2; dir++){
 
                 //최대 9칸까지 이동가능 - 각 칸을 확인하면서 놓을수 있는지 확인
-                for(int i = 1; i <= 9; i++){
+                for(int i = 1; i <= 10; i++){
                     int nextX = x + dx[dir]*i;
                     int nextY = y + dy[dir]*i;
 
                     //해당좌표가 게임판을 벗어났거나 이미 있는 위치(1이 들어있음)라면 그 전위치에 블럭을 놓음.
                     //t=2인 경우에는 y+1값도 확인해야 됨.
-                    if(nextX < 0 || nextX >= 10 || nextY < 0 || nextY >= 10 || maps[nextX][nextY] == 1 || maps[nextX+1][nextY] == 1){
-                        //블럭 놓고 종료
-                        maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
-                        maps[x + dx[dir] * (i-1) + 1][y + dy[dir] * (i-1)] = 1;
-                        break;
+                    if(dir == 0){
+                        if(nextX < 0 || nextX >= 9 || nextY < 0 || nextY >= 10 || maps[nextX][nextY] == 1 || maps[nextX+1][nextY] == 1){
+                            //블럭 놓고 종료
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
+                            maps[x + dx[dir] * (i-1) + 1][y + dy[dir] * (i-1)] = 1;
+                            break;
+                        }
                     }
+                    else if(dir == 1){
+//                        System.out.println("dir : "+ dir + ", nextX : " + nextX + ", nextY : " + nextY);
+
+                        if(nextX < 0 || nextX >= 10 || nextY < 0 || nextY >= 10 || maps[nextX][nextY] == 1 || maps[nextX+1][nextY] == 1){
+                            //블럭 놓고 종료
+                            maps[x + dx[dir] * (i-1)][y + dy[dir] * (i-1)] = 1;
+                            maps[x + dx[dir] * (i-1) + 1][y + dy[dir] * (i-1)] = 1;
+                            break;
+                        }
+                    }
+
 
                 }
             }
         }
 
     }
-
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -189,17 +296,20 @@ public class BOJ20061 {
             //블록 놓고 이동시키기
             setAndUpdateBlock(t,x,y);
 
-            //블록 지우고 점수 업데이트
-            scoreCheck();
+            //파란색 업데이트
+            scoreCheckBlue();
 
-
+            //초록색 업데이트
+            scoreCheckGreen();
 
 
         }
 
+        //점수 출력
         System.out.println(score);
-        System.out.println(countBlock());
 
+        //타일이 들어있는 칸의 수
+        System.out.println(countBlock());
 
     }
 }
