@@ -7,7 +7,7 @@ public class Solution3 {
 
 
 
-    static int bfs(List<Integer>[] maps,Location startNode, int n, int endNode){
+    static int bfs(List<List<Integer>> maps,Location startNode, int n, int endNode){
 
         boolean[] visited = new boolean[n+1];
         visited[startNode.node] = true;
@@ -21,7 +21,7 @@ public class Solution3 {
 
             Location currentNode = needVisited.poll();
 
-            for(int nextNode : maps[currentNode.node]){
+            for(int nextNode : maps.get(currentNode.node)){
                 if(!visited[nextNode]){
                     if(nextNode == endNode) return currentNode.count+1;
 
@@ -42,19 +42,25 @@ public class Solution3 {
         int[] answer = new int[sources.length];
 
         //bfs로 탐색하기 편하게 2차원 배열로 만듦
-        ArrayList<Integer>[] maps = new ArrayList[n+1];
-        for(int i = 1; i <= n; i++){
-            maps[i] = new ArrayList<Integer>();
+//        ArrayList<Integer>[] maps = new ArrayList[n+1];
+//        for(int i = 1; i <= n; i++){
+//            maps[i] = new ArrayList<Integer>();
+//        }
+
+        //리스트도 초기 크기를 정할수 잇음
+        List<List<Integer>> maps2 = new ArrayList<>(n+1);
+        for(int i = 0; i <= n; i++){
+            maps2.add(new ArrayList<>());
         }
 
 
         for(int[] temp : roads){
-            maps[temp[0]].add(temp[1]);
-            maps[temp[1]].add(temp[0]);
+            maps2.get(temp[0]).add(temp[1]);
+            maps2.get(temp[1]).add(temp[0]);
         }
 
         for(int i = 0; i < sources.length; i++){
-            answer[i] = bfs(maps,new Location(sources[i], 0), n, destination);
+            answer[i] = bfs(maps2,new Location(sources[i], 0), n, destination);
         }
 
         return answer;

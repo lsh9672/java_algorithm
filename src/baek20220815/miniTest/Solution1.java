@@ -8,7 +8,6 @@ public class Solution1 {
 
     static int count;
 
-
     static void recursive(int[] number, int idx, int check, int value){
         if(check >= 3){
             if(value == 0){
