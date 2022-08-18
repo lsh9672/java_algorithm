@@ -101,8 +101,6 @@ public class BOJ20057 {
                     //모래이동하는 메서드 호출
                     sandMove();
 
-
-
                 }
                 currentDir = (currentDir+1)%4;
             }
@@ -124,8 +122,6 @@ public class BOJ20057 {
                 maps[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-
-
 
 
         //토네이도의 현재위치 가운데 값으로 초기화
