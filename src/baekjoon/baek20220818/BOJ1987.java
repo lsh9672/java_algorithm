@@ -18,6 +18,11 @@ public class BOJ1987 {
     static int[] dy = {0, 0, -1, 1};
 
     static void dfs(Location startNode,int value) {
+        //알파벳은 최대 26이므로 26이면 종료
+        if(value == 26){
+            count = 26;
+            return;
+        }
         //이미 밟은 알파벳이라면 값 업데이트
         if(alphaCheck[maps[startNode.x][startNode.y] - 'A']){
             count = Math.max(count,value);
