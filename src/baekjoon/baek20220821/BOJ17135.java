@@ -1,4 +1,4 @@
-package baekjoon.baek20220820;
+package baekjoon.baek20220821;
 
 import java.io.BufferedReader;
 import java.io.IOException;
