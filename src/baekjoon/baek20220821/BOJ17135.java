@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
+/**
+ * 캐슬 디펜스
+ */
+
 public class BOJ17135 {
 
     static int N;
@@ -28,7 +32,7 @@ public class BOJ17135 {
 
     static void gameStart(int[] achorColumn) {
 
-        System.out.println(Arrays.toString(achorColumn));
+//        System.out.println(Arrays.toString(achorColumn));
 
         //맵을 복사해서 사용
         List<Integer[]> tempMaps = copyMaps(maps);
@@ -36,9 +40,6 @@ public class BOJ17135 {
 
         // 총 N번전진하면 끝
         int fowardCount = 0;
-
-        // 죽인 사람 명단.
-        List<Location> killList = new ArrayList<>();
 
         while(fowardCount < N) {
 
@@ -49,6 +50,9 @@ public class BOJ17135 {
 
 
             // 방문큐를 넘겨서 bfs탐색하고 리턴 값으로 죽일 위치를 받음.
+            // 죽인 사람 명단.
+            List<Location> killList = new ArrayList<>();
+
             for(int loc : achorColumn) {
                 Location bfsCheck = bfs(loc,tempMaps);
                 if(bfsCheck != null) {
@@ -60,16 +64,18 @@ public class BOJ17135 {
             for(Location killLoc : killList) {
                 if(tempMaps.get(killLoc.x)[killLoc.y] == 1) {
                     killNum++;
+                    tempMaps.get(killLoc.x)[killLoc.y] = 0;
                 }
-                tempMaps.get(killLoc.x)[killLoc.y] = 0;
+
             }
 
-
-            //4. 게임이 종료되지 않았다면 맵을 업데이트 해준다.
+            //맵을 업데이트 해준다.
             mapsUpdate(tempMaps);
 
             fowardCount++;
         }
+
+//        System.out.println(killNum);
 
         maxKill = Integer.max(maxKill, killNum);
     }
@@ -185,6 +191,8 @@ public class BOJ17135 {
 
             maps.add(tmp);
         }
+
+        maxKill = 0;
 
 
         recursive(0,new int[3],0);
