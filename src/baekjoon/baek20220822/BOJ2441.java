@@ -25,7 +25,5 @@ public class BOJ2441 {
         }
 
         System.out.println(sb);
-
-
     }
 }
