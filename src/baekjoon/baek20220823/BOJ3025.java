@@ -1,17 +1,17 @@
 package baekjoon.baek20220823;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Stack;
 import java.util.StringTokenizer;
-import java.io.IOException;
 
 /**
  * 알게된 메모이제이션으로 시간 줄이는 법
  * 매번 처음부터 놓을 공간을 탐색하는 것이 아니라, 스택에 미리 이동이 가능한 공간들을 누적시켜둠.
  */
 
-public class BOJ3025{
+public class BOJ3025 {
 
     static int R;
     static int C;
