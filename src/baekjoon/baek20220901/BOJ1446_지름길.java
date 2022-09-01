@@ -19,7 +19,7 @@ public class BOJ1446_지름길 {
         distances[0] = 0;
 
         PriorityQueue<Node> needVisited = new PriorityQueue<>();
-        needVisited.add(new Node(1,1));
+        needVisited.add(new Node(0,0));
 
         while(!needVisited.isEmpty()){
 
@@ -27,8 +27,19 @@ public class BOJ1446_지름길 {
 
             if(distances[currentNode.endNode] < currentNode.weight) continue;
 
-            for(int i = 0)
+            for(Node node : graph[currentNode.endNode]){
+
+                int nextDistance = distances[currentNode.endNode] + node.weight;
+
+                if(distances[node.endNode] > nextDistance){
+                    distances[node.endNode] = nextDistance;
+                    needVisited.add(new Node(node.endNode, nextDistance));
+                }
+
+            }
         }
+
+        return distances[D];
     }
 
     public static void main(String[] args) throws IOException {
@@ -43,6 +54,10 @@ public class BOJ1446_지름길 {
         for(int i = 0; i < D+1; i++){
             graph[i] = new ArrayList<>();
 
+
+        }
+
+        for(int i = 0; i < D; i++){
             graph[i].add(new Node(i+1,1));
         }
 
@@ -56,20 +71,25 @@ public class BOJ1446_지름길 {
 
             if(endNode - startNode <= weight) continue;
 
+            if(endNode > D) continue;
+
             graph[startNode].add(new Node(endNode,weight));
         }
 
-
-
-
+        System.out.println(dijkstra());
     }
 
-    static class Node{
+    static class Node implements Comparable<Node>{
         int endNode, weight;
 
         Node(int endNode, int weight){
             this.endNode = endNode;
             this.weight = weight;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return this.weight - o.weight;
         }
     }
 }

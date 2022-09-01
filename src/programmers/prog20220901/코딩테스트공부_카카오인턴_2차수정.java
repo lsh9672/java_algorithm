@@ -1,4 +1,4 @@
-package codingTest.kakaoTechIntern2022;
+package programmers.prog20220901;
 
 import java.util.Arrays;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
  *
  */
 
-public class KakaoIntern3 {
+public class 코딩테스트공부_카카오인턴_2차수정 {
 
     public int solution(int alp, int cop, int[][] problems){
         int result = Integer.MAX_VALUE;
@@ -100,7 +100,7 @@ public class KakaoIntern3 {
 //        int[][] problems2 = {{0,0,2,1,2},{4,5,3,1,2},{4,11,4,0,2},{10,4,0,4,2}};
 //        System.out.println(k2.solution(alp2,cop2,problems2));
 
-        KakaoIntern3 k3 = new KakaoIntern3();
+        코딩테스트공부_카카오인턴_2차수정 k3 = new 코딩테스트공부_카카오인턴_2차수정();
         int alp3 = 150;
         int cop3 = 0;
         int[][] problems3 = {{0,0,30,10,2},{150,150,3,2,1}};
