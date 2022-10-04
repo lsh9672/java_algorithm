@@ -45,7 +45,7 @@ public class BOJ9465_스티커 {
             sb.append(Math.max(numArray[0][n],numArray[1][n])).append("\n");
         }
 
-        sb.setLength(sb.length()-1);
+//        sb.setLength(sb.length()-1);
         System.out.println(sb);
 
     }
