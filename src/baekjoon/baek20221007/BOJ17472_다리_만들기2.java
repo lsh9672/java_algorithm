@@ -86,7 +86,6 @@ public class BOJ17472_다리_만들기2 {
                         break;
                     }
 
-
                 }
             }
         }
