@@ -24,6 +24,8 @@ public class BOJ15686_치킨배달 {
 
     static List<Node> chickenList; //모든 치킨 집 정보.
 
+    static int[] chickenRoadArray; //각 집별 치킨거리 정보 저장.
+
     static void print(){
         for(int i= 0; i < N; i++){
             System.out.println(Arrays.toString(maps[i]));
