@@ -15,7 +15,7 @@ import java.util.Stack;
  * @author : sh Lee
  * @date : 22. 10. 19.
  */
-public class BOJ9935_문자열_폭발 {
+public class BOJ9935_문자열_폭발_실패 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
